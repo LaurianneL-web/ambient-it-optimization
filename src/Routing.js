@@ -4,7 +4,6 @@ import App from './App';
 import Ticket from './components/Ticket'
 import ThankYou from './components/ThankYou';
 
-
 export default class Routing extends Component {
   render() {
     return (

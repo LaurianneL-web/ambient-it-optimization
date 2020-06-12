@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 
 import HttpsRedirect from 'react-https-redirect';
-import Routing from './Routing'
 
 import { persistor, store } from './redux/store';
 import { Provider } from "react-redux";
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { Spin } from "antd";
+
+import Routing  from './Routing';
+// const Routing = lazy(() => import('./Routing'));
 
 require("dotenv").config();
 // for developement purposes
@@ -20,7 +22,9 @@ ReactDOM.render(
   <HttpsRedirect>
      <Provider store={store}>
        <PersistGate loading={<Spin />} persistor={persistor}>
-         <Routing />
+        {/* <Suspense fallback={<div>Loading...</div>}> */}
+          <Routing />
+        {/* </Suspense> */}
        </PersistGate>
      </Provider>
   </HttpsRedirect>
