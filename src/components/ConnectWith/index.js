@@ -128,7 +128,7 @@ class ConnectWith extends Component {
     // );
 
     return (
-      <div>
+      <>
         <h2 className="sections">
           <Icon className="icon-section" type="usergroup-add" />{" "}
           Import your event contacts
@@ -283,7 +283,7 @@ class ConnectWith extends Component {
             />
           </Modal>
         </Spin>
-      </div>
+      </>
     );
   }
 }

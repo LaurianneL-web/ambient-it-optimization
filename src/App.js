@@ -18,7 +18,7 @@ const { Header, Footer } = Layout;
 class App extends Component {
   render() {
     return (
-      <div>
+      <>
         <Layout style={{ backgroundColor: "#EEF5FF" }}>
           <Header style={{ backgroundColor: "#EEF5FF" }} className='header-back'>
             <Row>
@@ -52,7 +52,7 @@ class App extends Component {
           </span>
           GDPR Compliant
         </Footer>
-      </div>
+      </>
     );
   }
 }

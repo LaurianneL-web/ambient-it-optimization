@@ -185,7 +185,7 @@ class Pay extends Component {
     }
 
     return (
-      <div>
+      <>
         <h2 className="sections">
           <Icon type="dollar-circle" theme="filled" className="icon-section" style={{fontSize: 25, padding: 10}}/>{" "}
           Order summary
@@ -314,7 +314,7 @@ class Pay extends Component {
             </div>
           </Col>
         </Row>
-      </div>
+      </>
     );
   }
 }

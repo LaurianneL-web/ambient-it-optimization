@@ -175,93 +175,91 @@ class ImportContacts extends Component {
     const { name, email } = this.props.user;
     const { spinning, events, attendees, selectedEvent } = this.state;
     return (
-      <div>
-      <div>
-          <Spin size="large" spinning={spinning}>
-            {events && attendees.length < 1 && (
+      <>
+        <Spin size="large" spinning={spinning}>
+          {events && attendees.length < 1 && (
+            <List
+              header={
+                <h5 style={{ display: "flex", justifyContent: "center", color: 'white'}}>
+                  {" "}
+                  Connected as {name} with email {email}
+                </h5>
+              }
+              style={{
+                overflow: "auto",
+                height: 500
+              }}
+              size="small"
+              bordered
+              dataSource={events}
+              renderItem={event => (
+                <List.Item
+                  onClick={() => this.getEventContacts(event.id, event)}
+                  className='event-list' 
+                >
+                  <span style={{ marginLeft: 10 }}>{`   ${
+                    event.name.text
+                  }`}</span>
+                  <Button icon="arrow-right" style={{borderRadius: 60}}/>
+                </List.Item>
+              )}
+            />
+          )}
+
+          {attendees.length > 1 && (
+            <div>
               <List
-                header={
-                  <h5 style={{ display: "flex", justifyContent: "center", color: 'white'}}>
-                    {" "}
-                    Connected as {name} with email {email}
-                  </h5>
-                }
+                id={'list-contact'}
                 style={{
                   overflow: "auto",
                   height: 500
                 }}
+                header={
+                  <ContactListHeader
+                    selectedEvent={selectedEvent}
+                    attendees={attendees}
+                    importList={() => this.importList()}
+                    resetState={() =>
+                      this.setState({
+                        attendees: [],
+                        attendees_pagination: null
+                      })
+                    }
+                    ToggleAttendees={() => this.ToggleAttendees()}
+                  />
+                }
                 size="small"
                 bordered
-                dataSource={events}
-                renderItem={event => (
-                  <List.Item
-                    onClick={() => this.getEventContacts(event.id, event)}
-                    className='event-list' 
-                  >
-                    <span style={{ marginLeft: 10 }}>{`   ${
-                      event.name.text
-                    }`}</span>
-                    <Button icon="arrow-right" style={{borderRadius: 60}}/>
+                dataSource={attendees}
+                renderItem={({
+                  id,
+                  profile: { name, email, cell_phone },
+                  checked
+                }) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      title={
+                        <div style={{ display: "flex" }}>
+                          <Checkbox
+                            type="checkbox"
+                            className="checkbox"
+                            checked={checked}
+                            onChange={() => this.unCheckAttendee(id)}
+                          />
+                          <h5 style={{ marginLeft: 10 }}>{name}</h5>
+                        </div>
+                      }
+                      description={`✉️${email} ${
+                        cell_phone ? `📞${cell_phone}` : ""
+                      }`}
+                    />
                   </List.Item>
                 )}
               />
-            )}
-
-            {attendees.length > 1 && (
-              <div>
-                <List
-                  id={'list-contact'}
-                  style={{
-                    overflow: "auto",
-                    height: 500
-                  }}
-                  header={
-                    <ContactListHeader
-                      selectedEvent={selectedEvent}
-                      attendees={attendees}
-                      importList={() => this.importList()}
-                      resetState={() =>
-                        this.setState({
-                          attendees: [],
-                          attendees_pagination: null
-                        })
-                      }
-                      ToggleAttendees={() => this.ToggleAttendees()}
-                    />
-                  }
-                  size="small"
-                  bordered
-                  dataSource={attendees}
-                  renderItem={({
-                    id,
-                    profile: { name, email, cell_phone },
-                    checked
-                  }) => (
-                    <List.Item>
-                      <List.Item.Meta
-                        title={
-                          <div style={{ display: "flex" }}>
-                            <Checkbox
-                              type="checkbox"
-                              className="checkbox"
-                              checked={checked}
-                              onChange={() => this.unCheckAttendee(id)}
-                            />
-                            <h5 style={{ marginLeft: 10 }}>{name}</h5>
-                          </div>
-                        }
-                        description={`✉️${email} ${
-                          cell_phone ? `📞${cell_phone}` : ""
-                        }`}
-                      />
-                    </List.Item>
-                  )}
-                />
-              </div>
-            )}
-          </Spin>
-        </div>
-      </div>
+            </div>
+          )}
+        </Spin>
+      </>
     )
   }
 }
